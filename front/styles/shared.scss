@@ -1,0 +1,191 @@
+//variables
+$primaryYellow: rgb(240, 140, 0);
+$lightYellow: rgb(255, 220, 100);
+$lighterYellow: rgb(255, 235, 205);
+$primaryGrey: rgb(50, 50, 50);
+$lightGrey: rgb(150, 150, 150);
+$lighterGrey: rgb(230, 230, 230);
+$lightestGrey: rgb(245, 245, 245);
+$lightShadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+
+//mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container {
+  width: 1500px;
+  margin: auto;
+  padding: 1rem 1.5rem;
+}
+
+//transitions
+.opacity-transition {
+  &-enter {
+    opacity: 0;
+  }
+  &-leave-to {
+    opacity: 0;
+  }
+  &-enter-active {
+    transition: all 0.3s ease-in-out;
+  }
+  &-leave-active {
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+//animations
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+//form styling
+.form-container {
+  width: 500px;
+  box-shadow: $lightShadow;
+  padding: 2rem;
+  position: relative;
+}
+.form-header {
+  font-size: 30px;
+  font-weight: 700;
+  color: $primaryGrey;
+  margin-bottom: 2rem;
+}
+.form {
+  position: relative;
+}
+.form-btn {
+  @include flex-center;
+  position: relative;
+  left: 5%;
+  width: 90%;
+  height: 50px;
+  border: none;
+  outline: none;
+  margin-bottom: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: $primaryGrey;
+  background-color: $lighterGrey;
+  transition: all 0.15s ease-in-out;
+  &:hover {
+    color: $primaryGrey;
+    background-color: $lightYellow;
+  }
+}
+.form-buttons-container {
+  display: flex;
+  margin-top: 3rem;
+}
+.form-error {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: calc(100% + 1rem);
+  left: 1%;
+  width: 98%;
+  padding: 1rem 1rem;
+  background: rgb(255, 180, 180);
+  color: rgb(200, 0, 0);
+  box-shadow: $lightShadow;
+  & i {
+    font-size: 25px;
+    color: rgb(220, 0, 0);
+    margin-right: 0.75rem;
+  }
+}
+.form-success {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: calc(100% + 1rem);
+  left: 1%;
+  width: 98%;
+  padding: 1rem 1rem;
+  background: rgb(220, 255, 180);
+  color: rgb(0, 140, 0);
+  box-shadow: $lightShadow;
+  & i {
+    font-size: 25px;
+    color: rgb(0, 160, 0);
+    margin-right: 0.75rem;
+  }
+}
+.error-transition {
+  &-leave-to,
+  &-enter {
+    opacity: 0;
+    transform: translateY(50%);
+  }
+  &-enter-active {
+    transition: all 0.2s ease-in-out;
+  }
+  &-leave-active {
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+//media queries
+@media (max-width: 1500px) {
+  .main-container {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+}
+@media (max-width: 1200px) {
+  .main-container {
+    padding: 1rem 1.5rem;
+  }
+}
+@media (max-width: 576px) {
+  .main-container {
+    padding: 0.5rem 1rem;
+  }
+  .form-container {
+    width: 100%;
+    padding: 1rem;
+  }
+}
