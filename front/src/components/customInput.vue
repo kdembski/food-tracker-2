@@ -1,12 +1,15 @@
 <template>
   <div class="custom-input-container">
+    <!-- input -->
     <input
       placeholder=" "
       :type="inputType"
       @focus="focusFunction"
       @input="$emit('input', $event.target.value)"
+      :value="$attrs.value"
     />
     <label>{{ labelText }}</label>
+    <!-- error -->
     <transition name="error-transition">
       <div v-if="errorBool" class="input-error-container">
         <i class="fas fa-exclamation"></i>
@@ -20,21 +23,26 @@
 export default {
   name: "customInput",
   props: {
+    //type of input
     inputType: {
       type: String,
       required: true,
     },
+    //function on input focus
     focusFunction: {
       type: Function,
     },
+    //text in input label
     labelText: {
       type: String,
       required: true,
     },
+    //error bool
     errorBool: {
       type: Boolean,
       required: true,
     },
+    //error message
     errorText: {
       type: String,
       required: true,
@@ -46,11 +54,12 @@ export default {
 <style lang="scss">
 .custom-input-container {
   position: relative;
+  width: 100%;
+  margin-bottom: 3rem;
   & input {
     display: flex;
     position: relative;
     width: 100%;
-    margin-bottom: 3rem;
     padding: 0.5rem 0.75rem;
     outline: none;
     border: 0;

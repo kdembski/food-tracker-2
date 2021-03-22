@@ -1,9 +1,13 @@
 <template>
   <div class="register">
     <div class="register-container">
+      <!-- form container -->
       <div class="form-container">
+        <!-- header -->
         <div class="form-header">Załóż konto</div>
+        <!-- form -->
         <form class="form" @submit.prevent="register" novalidate="true">
+          <!-- username -->
           <custom-input
             inputType="text"
             :focusFunction="clearErrors"
@@ -12,6 +16,7 @@
             labelText="Nazwa użytkownika"
             v-model="username"
           ></custom-input>
+          <!-- password -->
           <custom-input
             inputType="password"
             :focusFunction="clearErrors"
@@ -20,6 +25,7 @@
             labelText="Hasło"
             v-model="password"
           ></custom-input>
+          <!-- confirm password -->
           <custom-input
             inputType="password"
             :focusFunction="clearErrors"
@@ -28,6 +34,7 @@
             labelText="Potwierdź hasło"
             v-model="confirmPassword"
           ></custom-input>
+          <!-- buttons -->
           <div class="form-buttons-container">
             <div class="col-6 p-0">
               <input class="form-btn" type="submit" value="Zarejestuj" />
@@ -44,12 +51,14 @@
             </div>
           </div>
         </form>
+        <!-- form error -->
         <transition name="error-transition">
           <div v-if="registerError" class="form-error">
             <i class="fas fa-exclamation-circle"></i>
             {{ registerErrorMessage }}
           </div>
         </transition>
+        <!-- form success -->
         <transition name="error-transition">
           <div v-if="registerSuccess" class="form-success">
             <i class="fas fa-check-circle"></i>
@@ -89,6 +98,7 @@ export default {
     routerPush() {
       this.$router.push("/");
     },
+    //validate inputs
     register() {
       this.clearErrors();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -120,6 +130,7 @@ export default {
         this.getUser();
       }
     },
+    //set errors to false
     clearErrors() {
       this.usernameError = false;
       this.usernameErrorMessages = "";
@@ -130,6 +141,7 @@ export default {
       this.registerError = false;
       this.registerErrorMessage = "";
     },
+    //register user
     async registerUser() {
       try {
         await axios.post("http://localhost:5000/register", {
@@ -145,6 +157,7 @@ export default {
         console.log(err);
       }
     },
+    //get user from db
     async getUser() {
       try {
         const response = await axios.get(
@@ -199,7 +212,7 @@ export default {
     margin-bottom: 3rem;
   }
 }
-@media (max-height: 800px) {
+@media (max-height: 500px) {
   .register {
     padding-top: 2rem;
     position: unset;

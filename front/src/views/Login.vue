@@ -1,6 +1,7 @@
 <template>
   <div class="login">
     <div class="login-container">
+      <!-- logo -->
       <div class="login-logo">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,9 +45,13 @@
           </g>
         </svg>
       </div>
+      <!-- form container -->
       <div class="form-container">
+        <!-- form header -->
         <div class="form-header">Zaloguj się</div>
+        <!-- form -->
         <form class="form" @submit.prevent="login" novalidate="true">
+          <!-- username -->
           <custom-input
             inputType="text"
             :focusFunction="clearErrors"
@@ -55,6 +60,7 @@
             labelText="Nazwa użytkownika"
             v-model="username"
           ></custom-input>
+          <!-- password -->
           <custom-input
             inputType="password"
             :focusFunction="clearErrors"
@@ -63,6 +69,7 @@
             labelText="Hasło"
             v-model="password"
           ></custom-input>
+          <!-- buttons -->
           <div class="form-buttons-container">
             <div class="col-6 p-0">
               <input class="form-btn" type="submit" value="Zaloguj" />
@@ -82,6 +89,7 @@
             </div>
           </div>
         </form>
+        <!-- form error -->
         <transition name="error-transition">
           <div v-if="loginError" class="form-error">
             <i class="fas fa-exclamation-circle"></i>
@@ -113,6 +121,7 @@ export default {
     };
   },
   methods: {
+    //validate
     login() {
       this.clearErrors();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -127,9 +136,10 @@ export default {
         return false;
       }
       if (!this.usernameError && !this.passwordError) {
-        this.getUser();
+        this.loginUser();
       }
     },
+    //set all error to false
     clearErrors() {
       this.usernameError = false;
       this.usernameErrorMessages = "";
@@ -138,7 +148,8 @@ export default {
       this.loginError = false;
       this.loginErrorMessage = "";
     },
-    async getUser() {
+    //login user
+    async loginUser() {
       try {
         const response = await axios.get(
           `http://localhost:5000/login/${this.username}`
@@ -155,7 +166,7 @@ export default {
           this.loginErrorMessage = "Hasło jest niepoprawne";
           return false;
         } else {
-          this.$store.commit("setLoggedUser", this.user);
+          this.$store.dispatch("loginUser", this.user);
           this.$router.push("/home");
         }
       } catch (err) {
@@ -224,7 +235,7 @@ export default {
     margin-bottom: 3rem;
   }
 }
-@media (max-height: 800px) {
+@media (max-height: 500px) {
   .login {
     padding-top: 2rem;
     position: unset;

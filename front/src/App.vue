@@ -1,133 +1,157 @@
 <template>
   <transition appear name="opacity-transition">
     <div id="app">
-      <div v-if="navbar" id="nav">
-        <div class="navbar-container">
-          <div
-            :class="{
-              'main-nav': windowWidth > 992,
-              'mobile-nav': windowWidth <= 992,
-              collapsed: navbarCollapsed && windowWidth <= 992,
-            }"
-          >
-            <div class="nav-logo-svg-container">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 920 115"
-                @click="pushRouterToHome"
-              >
-                <defs>
-                  <text
-                    id="a3hPL2s5kP"
-                    x="118.78"
-                    y="263.59"
-                    alignment-baseline="before-edge"
-                    dominant-baseline="text-before-edge"
-                    font-family="Prosto One"
-                    font-size="150"
-                    font-style="normal"
-                    font-weight="400"
-                    letter-spacing="-7.5"
-                    style="line-height:100%"
-                    transform="translate(-127.1678 -297.6419)"
-                    xml:space="preserve"
-                  >
-                    <tspan x="118.78" alignment-baseline="before-edge" dy="0em">
-                      Foodtracker
-                    </tspan>
-                  </text>
-                </defs>
-                <g id="bDlXoz7sK">
-                  <use fill="#f08c00" xlink:href="#a3hPL2s5kP" />
-                </g>
-              </svg>
-            </div>
-            <div class="links-container">
-              <router-link class="navbar-link" to="/recipes"
-                >Przepisy</router-link
-              >
-              <router-link class="navbar-link" to="/calendar"
-                >Kalendarz</router-link
-              >
-              <router-link class="navbar-link" to="/ingredients"
-                >Składniki</router-link
-              >
-              <a class="navbar-link logout" @click="logout">Wyloguj</a>
-            </div>
+      <transition name="opacity-transition">
+        <div
+          v-if="navbar"
+          id="nav"
+          :class="{ minimized: minimizeNav && navbarCollapsed }"
+        >
+          <div class="navbar-container">
             <div
-              class="collapse-btn-container"
-              :class="{ collapsed: navbarCollapsed }"
-              @click="navbarCollapsed = !navbarCollapsed"
+              :class="{
+                'main-nav': windowWidth > 992,
+                'mobile-nav': windowWidth <= 992,
+                collapsed: navbarCollapsed && windowWidth <= 992,
+              }"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                viewBox="0 0 150 100"
-                class="collapse-btn"
+              <div class="nav-logo-svg-container">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 920 115"
+                  @click="pushRouterToHome"
+                >
+                  <defs>
+                    <text
+                      id="a3hPL2s5kP"
+                      x="118.78"
+                      y="263.59"
+                      alignment-baseline="before-edge"
+                      dominant-baseline="text-before-edge"
+                      font-family="Prosto One"
+                      font-size="150"
+                      font-style="normal"
+                      font-weight="400"
+                      letter-spacing="-7.5"
+                      style="line-height:100%"
+                      transform="translate(-127.1678 -297.6419)"
+                      xml:space="preserve"
+                    >
+                      <tspan
+                        x="118.78"
+                        alignment-baseline="before-edge"
+                        dy="0em"
+                      >
+                        Foodtracker
+                      </tspan>
+                    </text>
+                  </defs>
+                  <g id="bDlXoz7sK">
+                    <use fill="#f08c00" xlink:href="#a3hPL2s5kP" />
+                  </g>
+                </svg>
+              </div>
+              <div class="links-container">
+                <router-link class="navbar-link" to="/recipes"
+                  >Przepisy</router-link
+                >
+                <router-link class="navbar-link" to="/calendar"
+                  >Kalendarz</router-link
+                >
+                <router-link class="navbar-link" to="/ingredients"
+                  >Składniki</router-link
+                >
+                <a class="navbar-link logout" @click="logout">Wyloguj</a>
+              </div>
+              <div
+                class="collapse-btn-container"
+                :class="{ collapsed: navbarCollapsed }"
+                @click="navbarCollapsed = !navbarCollapsed"
               >
-                <rect
-                  id="rect1"
-                  x="10"
-                  y="5"
-                  rx="5"
-                  ry="5"
-                  width="130"
-                  height="8"
-                  fill="#323232"
-                />
-                <rect
-                  id="rect2"
-                  x="14"
-                  y="10"
-                  rx="5"
-                  ry="5"
-                  width="130"
-                  height="8"
-                  fill="#323232"
-                  transform="rotate(36, 14, 10)"
-                />
-                <rect
-                  id="rect3"
-                  x="10"
-                  y="86"
-                  rx="5"
-                  ry="5"
-                  width="130"
-                  height="8"
-                  fill="#323232"
-                  transform="rotate(-36, 10, 86)"
-                />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 150 100"
+                  class="collapse-btn"
+                >
+                  <rect
+                    id="rect1"
+                    x="10"
+                    y="5"
+                    rx="5"
+                    ry="5"
+                    width="130"
+                    height="8"
+                    fill="#323232"
+                  />
+                  <rect
+                    id="rect2"
+                    x="24"
+                    y="10"
+                    rx="5"
+                    ry="5"
+                    width="130"
+                    height="8"
+                    fill="#323232"
+                    transform="rotate(36, 24, 10)"
+                  />
+                  <rect
+                    id="rect3"
+                    x="20"
+                    y="86"
+                    rx="5"
+                    ry="5"
+                    width="130"
+                    height="8"
+                    fill="#323232"
+                    transform="rotate(-36, 20, 86)"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <transition name="opacity-transition">
-        <router-view />
+      </transition>
+      <transition name="opacity-transition" mode="out-in">
+        <loader v-if="$store.state.loading"></loader>
+        <router-view v-if="!$store.state.loading" />
       </transition>
     </div>
   </transition>
 </template>
 
 <script>
+import loader from "./components/loader.vue";
 export default {
+  components: { loader },
   data() {
     return {
       windowWidth: "",
       windowHeight: "",
+      scrollpx: "",
       navbarCollapsed: true,
+      minimizeNav: false,
     };
   },
   methods: {
     logout() {
       this.$store.commit("setLoggedUser", "");
+      this.$store.commit("setRecipes", []);
       this.$router.push("/");
     },
     handleResize() {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
+    },
+    handleScroll() {
+      this.scrollpx = window.scrollY;
+      if (this.scrollpx > 90 && !this.minimizeNav) {
+        this.minimizeNav = true;
+      }
+      if (this.scrollpx < 10 && this.minimizeNav) {
+        this.minimizeNav = false;
+      }
     },
     pushRouterToHome() {
       if (this.$route.name != "Home") {
@@ -141,13 +165,23 @@ export default {
         return false;
       else return true;
     },
+    currentPath: function() {
+      return this.$route.path;
+    },
+  },
+  watch: {
+    currentPath: function() {
+      this.navbarCollapsed = true;
+    },
   },
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("scroll", this.handleScroll);
   },
 };
 </script>
@@ -165,12 +199,17 @@ export default {
   position: sticky;
   top: 0;
   background-color: white;
-  padding: 1rem 0;
+  z-index: 999;
+  transition: all 0.3s ease-in-out;
+  &.minimized {
+    transform: translateY(-1.75rem);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  }
 }
 .navbar-container {
   width: 1500px;
   margin: auto;
-  padding: 1rem 1.5rem;
+  padding: 2.5rem 1.5rem 0.75rem 1.5rem;
 }
 .main-nav {
   display: flex;
@@ -196,12 +235,13 @@ export default {
     &.logout {
       cursor: pointer;
       color: $primaryYellow;
-      padding: 0.5rem 1.5rem;
+      padding: 0.5rem 1.75rem;
       border-radius: 50px;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 500;
       margin-right: 0;
-      box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
+      background-color: white;
       &:hover {
         background-color: $lightYellow;
         color: $primaryGrey;
@@ -222,7 +262,7 @@ export default {
   position: relative;
   &.collapsed {
     & .links-container {
-      transform: translateY(-120%);
+      transform: translateY(-150%);
       opacity: 0;
       transition: opacity 0.3s ease-out, transform 0s 0.3s;
     }
@@ -237,8 +277,8 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     top: 100%;
-    left: 0;
-    width: 100%;
+    left: -1.5rem;
+    width: 100vw;
     background-color: white;
     padding: 2rem 0;
     transition: opacity 0.3s ease-out, transform 0s;
@@ -260,9 +300,10 @@ export default {
     }
 
     &.logout {
+      font-size: 28px;
       cursor: pointer;
       color: $primaryGrey;
-      font-weight: 500;
+      font-weight: 700;
     }
   }
   & .nav-logo-svg-container {
@@ -277,9 +318,8 @@ export default {
     height: 31.25px;
     & .collapse-btn {
       & #rect1 {
-        transition: all 0.3s ease-out;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         opacity: 0;
-        transform: translateX(10%);
       }
       & #rect2,
       & #rect3 {
@@ -290,7 +330,6 @@ export default {
       & .collapse-btn {
         & #rect1 {
           opacity: 1;
-          transform: translateX(0);
         }
         & #rect2 {
           transform: rotate(0deg);
@@ -315,28 +354,33 @@ export default {
 }
 @media (max-width: 1200px) {
   .navbar-container {
-    padding: 1rem 1.5rem;
+    padding: 2rem 1.5rem 0.75rem 1.5rem;
   }
   #nav {
-    padding: 0.5rem 0;
+    &.minimized {
+      transform: translateY(-1.25rem);
+    }
   }
 }
 @media (max-width: 576px) {
   .navbar-container {
-    padding: 1rem 1rem;
+    padding: 1.5rem 1rem 0.75rem 1rem;
+  }
+  #nav {
+    &.minimized {
+      transform: translateY(-0.75rem);
+    }
   }
   .mobile-nav {
     & .links-container {
       height: 100vh;
-      top: -16px;
-      padding: 5rem 0;
+      top: -24px;
+      padding: 10rem 0;
+      left: -1rem;
     }
   }
 }
 @media (max-width: 400px) {
-  .navbar-container {
-    padding: 1rem 1rem;
-  }
   .mobile-nav {
     & .nav-logo-svg-container {
       width: 200px;
