@@ -391,8 +391,12 @@ export default {
     font-size: 80px;
     color: $lightGrey;
     background-color: rgb(250, 250, 250);
+     transition: all 0.2s ease-in-out;
     & i {
       transition: all 0.2s ease-in-out;
+    }
+    &:hover {
+      background-color: rgb(240, 240, 240);
     }
   }
   &-name {

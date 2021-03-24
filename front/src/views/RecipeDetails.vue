@@ -83,11 +83,21 @@
           <div class="delete-button" @click="deleteRecipeModal = true">
             Usuń
           </div>
+          <div class="duplicate-button" @click="duplicateRecipe">
+            Duplikuj
+          </div>
         </div>
         <!-- recipe deleted alert -->
         <transition name="recipe-deleted-transition">
           <div v-if="recipeDeleted" class="recipe-deleted">
             <i class="far fa-times-circle"></i>
+          </div>
+        </transition>
+        <!-- recipe duplicated alert -->
+        <transition name="recipe-duplicated-transition">
+          <div v-if="recipeDuplicated" class="recipe-duplicated">
+            <i class="fas fa-sticky-note first"></i>
+            <i class="fas fa-sticky-note second"></i>
           </div>
         </transition>
       </div>
@@ -224,6 +234,7 @@ export default {
       portionsNumber: 1,
       deleteRecipeModal: false,
       recipeDeleted: false,
+      recipeDuplicated: false,
     };
   },
   methods: {
@@ -245,13 +256,33 @@ export default {
       this.deleteRecipeModal = false;
       this.recipeDeleted = true;
       setTimeout(() => {
-        axios
-          .delete(`http://localhost:5000/recipes/${recipe.recipe_id}`)
-          .then(() => {
-            this.$store.commit("deleteRecipe", recipe);
-            this.$router.push("/recipes");
-          });
+        try {
+          axios
+            .delete(`http://localhost:5000/recipes/${recipe.recipe_id}`)
+            .then(() => {
+              this.$store.commit("deleteRecipe", recipe);
+              this.$router.push("/recipes");
+            });
+        } catch (error) {
+          console.log(error);
+        }
       }, 300);
+    },
+    //duplicate recipe
+    duplicateRecipe() {
+      var data = {
+        recipe: this.recipe,
+        callback: () => {
+          this.$router.push({
+            name: "Recipes",
+            params: { success: true },
+          });
+        },
+      };
+      this.recipeDuplicated = true;
+      setTimeout(() => {
+        this.$store.dispatch("addRecipe", data);
+      }, 900);
     },
   },
   computed: {
@@ -302,7 +333,7 @@ export default {
 .recipe-header {
   display: flex;
   position: relative;
-  margin: 1.5rem 0 0 0;
+  margin: 1rem 0 0 0;
 }
 .recipe-details-image {
   display: flex;
@@ -319,8 +350,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5rem 2rem;
+  padding: 5.5rem 2rem 5rem 2rem;
 }
+//recipe deleted alert
 .recipe-deleted {
   position: absolute;
   @include flex-center;
@@ -347,11 +379,63 @@ export default {
     }
   }
 }
+//recipe duplicated alert
+.recipe-duplicated {
+  position: absolute;
+  @include flex-center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: rgba(0, 140, 0, 0.8);
+  font-size: 20vh;
+  & .first {
+    transform: translateX(10vh);
+    animation: first-animation 0.45s 0.25s ease-in-out forwards;
+  }
+  & .second {
+    opacity: 0;
+    transform: translateX(-10vh) scale(0.1);
+    animation: second-animation 0.45s 0.25s ease-in-out forwards;
+  }
+  &-transition {
+    &-enter {
+      opacity: 0;
+    }
+    &-leave-to {
+      opacity: 0;
+    }
+    &-enter-active {
+      transition: all 0.25s ease-in-out;
+    }
+    &-leave-active {
+      transition: all 0.25s ease-in-out;
+    }
+  }
+}
+@keyframes first-animation {
+  from {
+    transform: translateX(10vh);
+  }
+  to {
+    transform: translateX(-2vh);
+  }
+}
+@keyframes second-animation {
+  from {
+    opacity: 0;
+    transform: translateX(-10vh) scale(0.1);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(2vh) scale(1);
+  }
+}
 //details
 .recipe-details {
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   position: relative;
   //name
   &-name {
@@ -359,6 +443,7 @@ export default {
     font-weight: 500;
     color: $primaryGrey;
     line-height: 110%;
+    text-align: center;
   }
   //prep time, kcal, category
   &-preptime,
@@ -412,22 +497,26 @@ export default {
   &-edit-buttons {
     display: flex;
     align-items: center;
+    justify-content: center;
     & .edit-button,
-    & .delete-button {
+    & .delete-button,
+    & .duplicate-button {
       cursor: pointer;
       color: $primaryYellow;
       padding: 0.5rem 2rem;
       border-radius: 50px;
       font-size: 20px;
       font-weight: 500;
-      margin-right: 0;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
       background-color: white;
-      margin-right: 1rem;
+      margin-right: 1.5rem;
       &:hover {
         background-color: $lightYellow;
         color: $primaryGrey;
       }
+    }
+    & .duplicate-button {
+      margin-right: 0;
     }
   }
 }
@@ -616,9 +705,10 @@ export default {
 .delete-recipe-modal {
   width: 400px;
   height: 250px;
-  box-shadow: $lightShadow;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
   background-color: white;
   opacity: 0;
+  //border-radius: 5px;
   animation: modal-animation 0.25s 0.2s ease-in-out forwards;
   &-overlay {
     @include flex-center;
@@ -671,7 +761,7 @@ export default {
 //media
 @media (max-width: 1500px) {
   .recipe-details-icons {
-    padding: 3rem 0;
+    padding: 5.5rem 1rem 5rem 1rem;
   }
 }
 @media (max-width: 1200px) {
@@ -698,6 +788,9 @@ export default {
         font-size: 20px;
       }
     }
+  }
+  .recipe-details-icons {
+    padding: 3.5rem 1rem 3rem 1rem;
   }
 }
 @media (max-width: 992px) {
@@ -771,7 +864,7 @@ export default {
   .recipe-details {
     padding: 0;
     &-name {
-      font-size: 30px;
+      font-size: 25px;
     }
     &-preptime,
     &-kcal,
@@ -795,11 +888,15 @@ export default {
     }
     &-edit-buttons {
       & .edit-button,
-      & .delete-button {
+      & .delete-button,
+      & .duplicate-button {
         padding: 0.3rem 1.25rem;
         font-size: 16px;
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
-        margin-right: 1rem;
+        margin-right: 0.75rem;
+      }
+      & .duplicate-button {
+        margin-right: 0;
       }
     }
   }

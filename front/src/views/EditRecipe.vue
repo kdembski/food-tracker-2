@@ -486,85 +486,18 @@ export default {
     },
     //add recipe
     addRecipe() {
-      this.$store.commit("setLoading", true);
-      axios
-        .post(
-          `http://localhost:5000/recipes/${this.$store.state.loggedUser.user_id}`,
-          this.recipe
-        )
-        .then((response) => {
-          //check if there is something in steps or ingredients
-          if (
-            this.recipe.ingredients.length > 0 ||
-            this.recipe.steps.length > 0
-          ) {
-            var ingredientsDone = true;
-            var stepsDone = true;
-            //if ingredients is not empty
-            if (this.recipe.ingredients.length > 0) {
-              ingredientsDone = false;
-              this.recipe.ingredients.forEach((ingredient, index, array) => {
-                axios
-                  .post(`http://localhost:5000/recipe_ingredients`, {
-                    ingredient_id: ingredient.ingredient_id,
-                    recipe_id: response.data.insertId,
-                    amount: ingredient.amount,
-                  })
-                  .then(() => {
-                    if (index == array.length - 1) {
-                      ingredientsDone = true;
-                      if (stepsDone) {
-                        this.$router.push({
-                          name: "Recipes",
-                          params: { success: true },
-                        });
-                        this.$store.dispatch(
-                          "getRecipe",
-                          response.data.insertId
-                        );
-                      }
-                    }
-                  });
-              });
-            }
-            //if steps is not empty
-            if (this.recipe.steps.length > 0) {
-              stepsDone = false;
-              this.recipe.steps.forEach((step, index, array) => {
-                axios
-                  .post(`http://localhost:5000/recipe_steps`, {
-                    step_number: step.step_number,
-                    recipe_id: response.data.insertId,
-                    instructions: step.instructions,
-                  })
-                  .then(() => {
-                    if (index == array.length - 1) {
-                      stepsDone = true;
-                      if (ingredientsDone) {
-                        this.$router.push({
-                          name: "Recipes",
-                          params: { success: true },
-                        });
-                        this.$store.dispatch(
-                          "getRecipe",
-                          response.data.insertId
-                        );
-                      }
-                    }
-                  });
-              });
-            }
-          }
-          //if steps and ingredients are empty
-          else {
-            this.$router.push({
-              name: "Recipes",
-              params: { success: true },
-            });
-            this.$store.dispatch("getRecipe", response.data.insertId);
-          }
-        });
+      var data = {
+        recipe: this.recipe,
+        callback: () => {
+          this.$router.push({
+            name: "Recipes",
+            params: { success: true },
+          });
+        },
+      };
+      this.$store.dispatch("addRecipe", data);
     },
+    //edit recipe
     editRecipe() {
       var recipeId = this.recipe.recipe_id;
       this.$store.commit("setLoading", true);
@@ -934,6 +867,7 @@ export default {
   width: 100%;
   box-shadow: unset;
   padding: 0 !important;
+  margin: 1.5rem 0 0 0;
 }
 .form-header {
   & i {
@@ -1131,6 +1065,7 @@ export default {
     margin: 0 1rem 3rem 0;
     display: flex;
     align-items: center;
+    color: $lightGrey;
   }
   &-text {
     display: flex;
