@@ -223,7 +223,7 @@ export default {
     font-weight: 400;
     color: $lightGrey;
     margin: 0 1.5rem;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.1s ease-in-out;
     &:hover {
       color: $primaryYellow;
       text-decoration: none;

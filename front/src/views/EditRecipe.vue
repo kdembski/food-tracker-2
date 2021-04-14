@@ -1120,7 +1120,7 @@ export default {
   box-shadow: $lightShadow;
   position: relative;
   opacity: 0;
-  animation: modal-animation 0.3s 0.2s ease-in-out forwards;
+  animation: modal-animation 0.2s 0.2s ease-out forwards;
   &-overlay {
     @include flex-center;
     position: fixed;

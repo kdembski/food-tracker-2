@@ -39,6 +39,12 @@ const routes = [
     component: () => import("../views/EditRecipe.vue"),
     params: true,
   },
+  {
+    path: "/calendar",
+    name: "Calendar",
+    component: () => import("../views/Calendar.vue"),
+    params: true,
+  },
 ];
 
 const router = new VueRouter({

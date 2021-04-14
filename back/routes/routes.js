@@ -19,6 +19,12 @@ import {
 } from "../controllers/recipes.js";
 import { registerUser, loginUser } from "../controllers/users.js";
 import { getIngredients } from "../controllers/ingredients.js";
+import {
+  getDay,
+  addDayMeal,
+  updateDayMeal,
+  deleteDayMeal,
+} from "../controllers/calendar.js";
 
 // init express router
 const router = express.Router();
@@ -62,6 +68,15 @@ router.get("/login/:user_name", loginUser);
 
 //ingredients routes
 router.get("/ingredients", getIngredients);
+
+//calendar routes
+router.get("/calendar/:user_id%:day%:month%:year", getDay);
+
+router.post("/calendar", addDayMeal);
+
+router.put("/calendar/:date_id", updateDayMeal);
+
+router.delete("/calendar/:date_id", deleteDayMeal);
 
 // export default router
 export default router;

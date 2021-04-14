@@ -6,7 +6,7 @@ $primaryGrey: rgb(50, 50, 50);
 $lightGrey: rgb(150, 150, 150);
 $lighterGrey: rgb(230, 230, 230);
 $lightestGrey: rgb(245, 245, 245);
-$lightShadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+$lightShadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
 
 //mixins
 @mixin flex-center {
@@ -81,7 +81,7 @@ $lightShadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
 @keyframes modal-animation {
   from {
     opacity: 0;
-    transform: translateY(-15%);
+    transform: translateY(-10%);
   }
   to {
     opacity: 1;

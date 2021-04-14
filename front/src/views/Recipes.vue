@@ -388,15 +388,13 @@ export default {
     @include flex-center;
     height: 250px;
     border: 1px solid $lighterGrey;
-    font-size: 80px;
+    font-size: 60px;
     color: $lightGrey;
     background-color: rgb(250, 250, 250);
-     transition: all 0.2s ease-in-out;
-    & i {
-      transition: all 0.2s ease-in-out;
-    }
+    transition: all 0.15s ease-in-out;
     &:hover {
       background-color: rgb(240, 240, 240);
+      color: $primaryGrey;
     }
   }
   &-name {

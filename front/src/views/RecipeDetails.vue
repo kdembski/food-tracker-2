@@ -510,6 +510,7 @@ export default {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15);
       background-color: white;
       margin-right: 1.5rem;
+      transition: all 0.1s ease-in-out;
       &:hover {
         background-color: $lightYellow;
         color: $primaryGrey;
@@ -709,7 +710,7 @@ export default {
   background-color: white;
   opacity: 0;
   //border-radius: 5px;
-  animation: modal-animation 0.25s 0.2s ease-in-out forwards;
+  animation: modal-animation 0.2s 0.2s ease-out forwards;
   &-overlay {
     @include flex-center;
     position: fixed;

@@ -95,7 +95,7 @@ export default {
     top: 100%;
     left: 0;
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 1rem;
     color: rgb(200, 0, 0);
     background: rgb(255, 180, 180);
     font-weight: 400;
